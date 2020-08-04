@@ -123,10 +123,7 @@ def mutation(tomutate):
             elif tempPopulation1[tomutate].gene[j] == 1:
                 tempPopulation1[tomutate].gene[j] = 0
 
-            # print("Mutated: " + str(offspring[tomutate].gene))
-    for z in range(P):
-        if tomutate == z:
-            offspring.append(tempPopulation1[tomutate])
+    offspring.append(tempPopulation1[tomutate])
 
 
 def parent_evaluate():  # f=x^2 for parent

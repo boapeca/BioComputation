@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 
-N = 10  # number of genes
+N = 20  # number of genes
 P = 10  # population number
 Maxgen = 500  # Generations
 Pm = 0.1  # Mutation probability
@@ -49,7 +49,7 @@ def create_pop():
             population[i].gene[j] = num
 
 
-def tournament():  # Initial Generation
+def tournament():
     global roundNum
     global tempPopulation1
     tempPopulation1 = copy.deepcopy(population)
@@ -62,6 +62,7 @@ def tournament():  # Initial Generation
             parent2 = random.randint(0, P - 1)
             if parent1 != parent2:
                 check = 1
+        # First parent is choosen
         if population[parent1].fitness <= population[parent2].fitness:
             parent3 = parent1
         else:
@@ -71,10 +72,13 @@ def tournament():  # Initial Generation
             parent2 = random.randint(0, P - 1)
             if parent1 != parent3 or parent2 != parent3:
                 check2 = 1
+        # Second parent is chosen
         if population[parent1].fitness <= population[parent2].fitness:
             crossover(parent3, parent1)
         else:
             crossover(parent3, parent2)
+
+        #  The index of the selected parents are sent to the crossover function
 
 
 def crossover(parent1cross, parent2cross):
@@ -89,7 +93,6 @@ def crossover(parent1cross, parent2cross):
         for i in range(crossPoint, N):
             tempPopulation1[parent1cross].gene[i] = tempPopulation1[parent2cross].gene[i]
 
-
     mutation(parent1cross)
 
 
@@ -101,7 +104,7 @@ def mutation(tomutate):
     for j in range(N):
         mut = random.uniform(0, 1)
         if mut <= Pm:
-            num = random.uniform(-0.01, 0.01)
+            num = random.uniform(-0.1, 0.1)
             tempPopulation1[tomutate].gene[j] += num
 
             if tempPopulation1[tomutate].gene[j] <= -5.12:
@@ -109,9 +112,6 @@ def mutation(tomutate):
 
             elif tempPopulation1[tomutate].gene[j] >= 5.12:
                 tempPopulation1[tomutate].gene[j] = 5.12
-
-    #for e in range(N):
-        #tempPopulation1[tomutate].gene[e] = round(tempPopulation1[tomutate].gene[e], 2)
 
     offspring.append(tempPopulation1[tomutate])
 
@@ -179,7 +179,7 @@ def start():
     # creates a graph for easier behaviour interpretation of the pop
     plt.ylabel("Fitness")
     plt.xlabel("Generation")
-    plt.axis([0, Maxgen, 0, 250])
+    plt.axis([0, Maxgen, 0, 400])
 
     # Iterates through each generation
     for i in range(Maxgen):

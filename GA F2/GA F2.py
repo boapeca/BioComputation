@@ -7,7 +7,7 @@ N = 10  # number of genes
 P = 10  # population number
 Maxgen = 250  # Generations
 Pm = 0.001  # Mutation probability
-Pc = 0.6  # Crossover Probability between 0.6 and 0.9
+Pc = 0.1  # Crossover Probability between 0.6 and 0.9
 
 
 class Individual:
@@ -99,8 +99,7 @@ def crossover(parent1cross, parent2cross):
     global offspringCheck
     global tempPopulation2
 
-    crossPoint = random.randint(0, N)
-    crossPoint2 = random.randint(N/2-1, N)
+    crossPoint = random.randint(0, N)  # point of crossover
     cross = random.uniform(0, 1)
     offspringCheck = len(tempPopulation1)
 
@@ -108,7 +107,6 @@ def crossover(parent1cross, parent2cross):
         for i in range(crossPoint, N):
             tempPopulation1[parent1cross].gene[i] = tempPopulation1[parent2cross].gene[i]
     mutation(parent1cross)
-
 
 
 def mutation(tomutate):
@@ -120,15 +118,13 @@ def mutation(tomutate):
     for j in range(N):
         mut = random.uniform(0, 1)
         if mut <= Pm:
-            if tempPopulation1[tomutate].gene[j] == 0:
-                tempPopulation1[tomutate].gene[j] = 1
-            elif tempPopulation1[tomutate].gene[j] == 1:
-                tempPopulation1[tomutate].gene[j] = 0
+            if j != 0 or j!= 5:
+                if tempPopulation1[tomutate].gene[j] == 0:
+                    tempPopulation1[tomutate].gene[j] = 1
+                elif tempPopulation1[tomutate].gene[j] == 1:
+                    tempPopulation1[tomutate].gene[j] = 0
 
-            # print("Mutated: " + str(offspring[tomutate].gene))
-    for z in range(P):
-        if tomutate == z:
-            offspring.append(tempPopulation1[tomutate])
+    offspring.append(tempPopulation1[tomutate])
 
 
 def parent_evaluate():  # #fitness by f(x,y) = 0.26.( x2 + y2 ) – 0.48.x.y for parent
